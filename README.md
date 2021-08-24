@@ -15,3 +15,6 @@
 | ↓     | 高速落下                            |
 | z / x | 左回転 / 右回転                     |
 | a     | HOLD と落下中のテトリミノの入れ替え |
+
+## スクリーンショット
+![tetris-ts](https://user-images.githubusercontent.com/50661590/130534905-e5b54490-8fa4-4732-a7bd-d854aa39a059.png)
