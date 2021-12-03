@@ -33,7 +33,7 @@ for (var i = 0; i <= 21; i++) {
         }
     }
 }
-console.log(field);
+// console.log(field);
 var mino_shape = {
     T: [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     I: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -162,6 +162,15 @@ var setHold = function () {
     }
 };
 var stack = [];
+var refreshQueue = function () {
+    var clear_mino = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    for (var i = 0; i < queue_mino.length; i++) {
+        if (JSON.stringify(queue_mino[i].shape) == JSON.stringify(clear_mino)) {
+            queue_mino.splice(i, 1);
+            current_index--;
+        }
+    }
+};
 var checkFillLines = function () {
     var counter = 0;
     for (var i = 0; i < 20; i++) {
@@ -298,6 +307,7 @@ var drawDisplay = function () {
     if (timer >= duration) {
         checkFillLines();
         applyMinosToField();
+        refreshQueue();
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawBG();
         var idx_x = (queue_mino[current_index].x - frame_x) / tile_size + 1;
@@ -307,7 +317,7 @@ var drawDisplay = function () {
                 if (queue_mino[current_index].shape[a + 5 * b] === 1 && field[idx_x - 2 + a + (idx_y - 2 + b + 1) * 12] === 1) {
                     collision_flag = true;
                     console.clear();
-                    console.log(idx_x - 2 + a, idx_y - 2 + b, field[idx_x - 2 + a + (idx_y - 2 + b) * 12]);
+                    // console.log(idx_x - 2 + a, idx_y - 2 + b, field[idx_x - 2 + a + (idx_y - 2 + b) * 12]);
                     break;
                 }
             }
