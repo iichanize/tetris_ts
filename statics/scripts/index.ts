@@ -164,6 +164,17 @@ const setHold = function (): void {
     }
 };
 let stack: number[] = [];
+
+const refreshQueue = function (): void {
+    const clear_mino: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    for (let i: number = 0; i < queue_mino.length; i++) {
+        if (JSON.stringify(queue_mino[i].shape) == JSON.stringify(clear_mino)) {
+            queue_mino.splice(i, 1);
+            current_index--;
+        }
+    }
+};
+
 const checkFillLines = function (): void {
     let counter: number = 0;
     for (let i: number = 0; i < 20; i++) {
@@ -303,6 +314,7 @@ const drawDisplay = function (): void {
     if (timer >= duration) {
         checkFillLines();
         applyMinosToField();
+        refreshQueue();
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawBG();
 
