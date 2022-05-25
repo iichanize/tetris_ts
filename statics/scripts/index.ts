@@ -1,6 +1,7 @@
 const wrapper: HTMLBodyElement = <HTMLBodyElement>document.getElementById("id_wrapper");
 const canvas: HTMLCanvasElement = <HTMLCanvasElement>document.getElementById("id_canvas");
 const ctx: CanvasRenderingContext2D = <CanvasRenderingContext2D>canvas.getContext("2d");
+
 let tile_size: number;
 let queue_mino: Mino[] = [];
 let duration: number = 25;
@@ -53,6 +54,15 @@ const mino_color: { [index: string]: string } = {
     Z: "red",
 };
 const mino_name: string[] = ["T", "I", "O", "L", "J", "S", "Z"];
+
+let length_last_mino_name = mino_name.length;
+let length_last_queue_mino = queue_mino.length;
+
+let score_counter = 0;
+let REN = 0;
+let flag_ren = false;
+let total_score = 0;
+
 class Mino {
     name: string;
     shape: number[];
@@ -185,6 +195,7 @@ const checkFillLines = function (): void {
             counter += field[j + 1 + (i + 1) * 12];
         }
         if (counter === 10) {
+			score_counter++;
             //行iが埋まっているとき
             for (let g: number = i; g >= 0; g--) {
                 for (let h: number = 0; h < 10; h++) {
@@ -221,6 +232,14 @@ const checkFillLines = function (): void {
             refreshDisplay();
         }
     }
+    if(score_counter > 0){
+		flag_ren = true;
+	}else{
+		flag_ren = false;
+	}
+	total_score += score_counter * score_counter * 500;
+	total_score += score_counter * score_counter * REN * 100;
+	score_counter = 0;
 };
 
 const getSize = function (): void {
@@ -236,6 +255,8 @@ const drawBG = function (): void {
 
     writeString("HOLD", frame_x - 5 * tile_size, tile_size, "20pt Arial", [0, 0, 0, 1], [0, 0, 0, 0]);
     writeString("NEXT", frame_x + 14 * tile_size, tile_size, "20pt Arial", [0, 0, 0, 1], [0, 0, 0, 0]);
+    writeString("SCORE", frame_x + 14 * tile_size, 19 * tile_size, "15pt Arial", [0, 0, 0, 1], [0, 0, 0, 0]);
+    writeString(total_score.toString(), frame_x + 14 * tile_size, 20 * tile_size, "15pt Arial", [0, 0, 0, 1], [0, 0, 0, 0]);
     for (let i: number = 0; i < 10; i++) {
         for (let j: number = 0; j < 20; j++) {
             ctx.beginPath();
@@ -310,11 +331,23 @@ const refill_mino_name = function (): void {
     mino_name.push("S");
     mino_name.push("Z");
 };
+var checkREN = function () {
+	if(length_last_mino_name != mino_name.length){
+		if(flag_ren){
+			REN++;
+		}else{
+			REN = 0;
+		}
+		length_last_mino_name = mino_name.length;
+		length_last_queue_mino = queue_mino.length;
+	}
+};
 const drawDisplay = function (): void {
     if (timer >= duration) {
         checkFillLines();
         applyMinosToField();
         refreshQueue();
+		checkREN();
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawBG();
 
@@ -473,6 +506,7 @@ function KeyDownFunc(e: KeyboardEvent) {
         if (downflag) {
             queue_mino[current_index].y += tile_size;
             timer = 0;
+			total_score += 10;
             refreshDisplay();
         }
     } else if (e.key === "z") {
