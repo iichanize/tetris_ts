@@ -1,6 +1,6 @@
 # Tetris_ts
 
-(動作リンク)[https://iichanize.github.io/tetris_ts/statics/index.html]
+[動作リンク](https://iichanize.github.io/tetris_ts/statics/index.html)
 
 ## 環境
 
