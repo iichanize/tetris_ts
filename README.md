@@ -20,4 +20,4 @@
 
 ## スクリーンショット
 
-![tetris-ts](https://user-images.githubusercontent.com/50661590/130534905-e5b54490-8fa4-4732-a7bd-d854aa39a059.png)
+![tetris-ts2](https://user-images.githubusercontent.com/50661590/170388744-8e11d8d8-b8b3-48f9-9a01-629d79185efb.png)
