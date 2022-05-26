@@ -1,14 +1,8 @@
 import Mino from "./Mino";
 
-const wrapper: HTMLBodyElement = <HTMLBodyElement>(
-  document.getElementById("id_wrapper")
-);
-const canvas: HTMLCanvasElement = <HTMLCanvasElement>(
-  document.getElementById("id_canvas")
-);
-const ctx: CanvasRenderingContext2D = <CanvasRenderingContext2D>(
-  canvas.getContext("2d")
-);
+const wrapper: HTMLBodyElement = <HTMLBodyElement>document.getElementById("id_wrapper");
+const canvas: HTMLCanvasElement = <HTMLCanvasElement>document.getElementById("id_canvas");
+const ctx: CanvasRenderingContext2D = <CanvasRenderingContext2D>canvas.getContext("2d");
 
 let tile_size: number;
 let queue_mino: Mino[] = [];
@@ -61,9 +55,7 @@ const setHold = function (): void {
     if (mino_name.length === 0) {
       refill_mino_name();
     }
-    queue_mino.push(
-      new Mino(mino_name[t], frame_x + 14 * tile_size, 6 * tile_size)
-    );
+    queue_mino.push(new Mino(mino_name[t], frame_x + 14 * tile_size, 6 * tile_size));
     queue_mino[current_index + 2].y = 3 * tile_size;
     queue_mino[current_index + 1].y = 0;
     queue_mino[current_index + 1].x = frame_x + 4 * tile_size;
@@ -71,9 +63,7 @@ const setHold = function (): void {
     queue_mino.splice(current_index, 1);
     mino_buffer[0].x = frame_x - 5 * tile_size;
     mino_buffer[0].y = 3 * tile_size;
-    mino_buffer[0].shape = JSON.parse(
-      JSON.stringify(mino_shape[mino_buffer[0].name])
-    );
+    mino_buffer[0].shape = JSON.parse(JSON.stringify(mino_shape[mino_buffer[0].name]));
     refreshDisplay();
     mino_name.splice(t, 1);
     buf_flag = false;
@@ -83,9 +73,7 @@ const setHold = function (): void {
     mino_buffer[0] = temp;
     mino_buffer[0].x = frame_x - 5 * tile_size;
     mino_buffer[0].y = 3 * tile_size;
-    mino_buffer[0].shape = JSON.parse(
-      JSON.stringify(mino_shape[mino_buffer[0].name])
-    );
+    mino_buffer[0].shape = JSON.parse(JSON.stringify(mino_shape[mino_buffer[0].name]));
     queue_mino[current_index].y = 0;
     queue_mino[current_index].x = frame_x + 4 * tile_size;
     refreshDisplay();
@@ -95,9 +83,7 @@ const setHold = function (): void {
 let stack: number[] = [];
 
 const refreshQueue = function (): void {
-  const clear_mino: number[] = [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  ];
+  const clear_mino: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   for (let i: number = 0; i < queue_mino.length; i++) {
     if (JSON.stringify(queue_mino[i].shape) == JSON.stringify(clear_mino)) {
       queue_mino.splice(i, 1);
@@ -136,8 +122,7 @@ const checkFillLines = function (): void {
             for (let m: number = 5; m >= 0; m--) {
               if (idx_y - 1 - 2 + m <= i) {
                 if (l + (m - 1) * 5 >= 0) {
-                  queue_mino[k].shape[l + m * 5] =
-                    queue_mino[k].shape[l + (m - 1) * 5];
+                  queue_mino[k].shape[l + m * 5] = queue_mino[k].shape[l + (m - 1) * 5];
                 } else {
                   queue_mino[k].shape[l + m * 5] = 0;
                 }
@@ -170,30 +155,9 @@ const drawBG = function (): void {
   frame_x = Math.floor(canvas.width * 0.5 - frame_width * 0.5);
   frame_y = 0;
 
-  writeString(
-    "HOLD",
-    frame_x - 5 * tile_size,
-    tile_size,
-    "20pt Arial",
-    [0, 0, 0, 1],
-    [0, 0, 0, 0]
-  );
-  writeString(
-    "NEXT",
-    frame_x + 14 * tile_size,
-    tile_size,
-    "20pt Arial",
-    [0, 0, 0, 1],
-    [0, 0, 0, 0]
-  );
-  writeString(
-    "SCORE",
-    frame_x + 14 * tile_size,
-    19 * tile_size,
-    "15pt Arial",
-    [0, 0, 0, 1],
-    [0, 0, 0, 0]
-  );
+  writeString("HOLD", frame_x - 5 * tile_size, tile_size, "20pt Arial", [0, 0, 0, 1], [0, 0, 0, 0]);
+  writeString("NEXT", frame_x + 14 * tile_size, tile_size, "20pt Arial", [0, 0, 0, 1], [0, 0, 0, 0]);
+  writeString("SCORE", frame_x + 14 * tile_size, 19 * tile_size, "15pt Arial", [0, 0, 0, 1], [0, 0, 0, 0]);
   writeString(
     total_score.toString(),
     frame_x + 14 * tile_size,
@@ -205,12 +169,7 @@ const drawBG = function (): void {
   for (let i: number = 0; i < 10; i++) {
     for (let j: number = 0; j < 20; j++) {
       ctx.beginPath();
-      ctx.rect(
-        frame_x + i * tile_size,
-        frame_y + j * tile_size,
-        tile_size,
-        tile_size
-      );
+      ctx.rect(frame_x + i * tile_size, frame_y + j * tile_size, tile_size, tile_size);
       ctx.fillStyle = "azure";
       ctx.strokeStyle = "black";
       ctx.fill();
@@ -220,18 +179,8 @@ const drawBG = function (): void {
   }
   for (let i: number = 0; i < 20; i++) {
     ctx.beginPath();
-    ctx.rect(
-      frame_x - tile_size,
-      frame_y + i * tile_size,
-      tile_size,
-      tile_size
-    );
-    ctx.rect(
-      frame_x + 10 * tile_size,
-      frame_y + i * tile_size,
-      tile_size,
-      tile_size
-    );
+    ctx.rect(frame_x - tile_size, frame_y + i * tile_size, tile_size, tile_size);
+    ctx.rect(frame_x + 10 * tile_size, frame_y + i * tile_size, tile_size, tile_size);
     ctx.fillStyle = "gray";
     ctx.strokeStyle = "black";
     ctx.fill();
@@ -240,12 +189,7 @@ const drawBG = function (): void {
   }
   for (let i: number = -1; i < 11; i++) {
     ctx.beginPath();
-    ctx.rect(
-      frame_x + i * tile_size,
-      frame_y + 20 * tile_size,
-      tile_size,
-      tile_size
-    );
+    ctx.rect(frame_x + i * tile_size, frame_y + 20 * tile_size, tile_size, tile_size);
     ctx.fillStyle = "gray";
     ctx.strokeStyle = "black";
     ctx.fill();
@@ -325,10 +269,7 @@ const drawDisplay = function (): void {
     let idx_y: number = (queue_mino[current_index].y - frame_y) / tile_size + 1;
     for (let a: number = 0; a < 5; a++) {
       for (let b: number = 0; b < 5; b++) {
-        if (
-          queue_mino[current_index].shape[a + 5 * b] === 1 &&
-          field[idx_x - 2 + a + (idx_y - 2 + b + 1) * 12] === 1
-        ) {
+        if (queue_mino[current_index].shape[a + 5 * b] === 1 && field[idx_x - 2 + a + (idx_y - 2 + b + 1) * 12] === 1) {
           collision_flag = true;
           console.clear();
           break;
@@ -338,10 +279,7 @@ const drawDisplay = function (): void {
     if (field[5] === 1) {
       console.log("END");
       game_end = true;
-    } else if (
-      queue_mino[current_index].y + tile_size < 20 * tile_size &&
-      collision_flag === false
-    ) {
+    } else if (queue_mino[current_index].y + tile_size < 20 * tile_size && collision_flag === false) {
       queue_mino[current_index].y += tile_size;
     } else {
       collision_flag = false;
@@ -368,9 +306,7 @@ const drawDisplay = function (): void {
         refill_mino_name();
       }
       let t: number = Math.floor(Math.random() * mino_name.length);
-      queue_mino.push(
-        new Mino(mino_name[t], frame_x + 14 * tile_size, 6 * tile_size)
-      );
+      queue_mino.push(new Mino(mino_name[t], frame_x + 14 * tile_size, 6 * tile_size));
       queue_mino[current_index + 2].y = 3 * tile_size;
       queue_mino[current_index + 1].y = -tile_size;
       queue_mino[current_index + 1].x = frame_x + 4 * tile_size;
@@ -388,14 +324,7 @@ const drawDisplay = function (): void {
       ctx.fillStyle = "rgba(10, 10, 10, 0.3)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.closePath();
-      writeString(
-        "GAME OVER",
-        canvas.width / 2,
-        canvas.height / 2,
-        "50pt Arial",
-        [255, 255, 255, 1],
-        [0, 0, 0, 1]
-      );
+      writeString("GAME OVER", canvas.width / 2, canvas.height / 2, "50pt Arial", [255, 255, 255, 1], [0, 0, 0, 1]);
     }
 
     timer = 0;
@@ -434,14 +363,10 @@ window.addEventListener("load", () => {
   queue_mino.push(new Mino(mino_name[t], frame_x + 4 * tile_size, -tile_size));
   mino_name.splice(t, 1);
   t = Math.floor(Math.random() * mino_name.length);
-  queue_mino.push(
-    new Mino(mino_name[t], frame_x + 14 * tile_size, 3 * tile_size)
-  );
+  queue_mino.push(new Mino(mino_name[t], frame_x + 14 * tile_size, 3 * tile_size));
   mino_name.splice(t, 1);
   t = Math.floor(Math.random() * mino_name.length);
-  queue_mino.push(
-    new Mino(mino_name[t], frame_x + 14 * tile_size, 6 * tile_size)
-  );
+  queue_mino.push(new Mino(mino_name[t], frame_x + 14 * tile_size, 6 * tile_size));
   mino_name.splice(t, 1);
 });
 document.addEventListener("keydown", KeyDownFunc);
@@ -453,10 +378,7 @@ function KeyDownFunc(e: KeyboardEvent) {
     let idx_y: number = (queue_mino[current_index].y - frame_y) / tile_size + 1;
     for (let i: number = 0; i < 5; i++) {
       for (let j: number = 0; j < 5; j++) {
-        if (
-          queue_mino[current_index].shape[i + 5 * j] === 1 &&
-          field[idx_x - 2 + i - 1 + (idx_y - 2 + j) * 12] === 1
-        ) {
+        if (queue_mino[current_index].shape[i + 5 * j] === 1 && field[idx_x - 2 + i - 1 + (idx_y - 2 + j) * 12] === 1) {
           leftflag = false;
         }
       }
@@ -471,10 +393,7 @@ function KeyDownFunc(e: KeyboardEvent) {
     let idx_y: number = (queue_mino[current_index].y - frame_y) / tile_size + 1;
     for (let i: number = 0; i < 5; i++) {
       for (let j: number = 0; j < 5; j++) {
-        if (
-          queue_mino[current_index].shape[i + 5 * j] === 1 &&
-          field[idx_x - 2 + i + 1 + (idx_y - 2 + j) * 12] === 1
-        ) {
+        if (queue_mino[current_index].shape[i + 5 * j] === 1 && field[idx_x - 2 + i + 1 + (idx_y - 2 + j) * 12] === 1) {
           rightflag = false;
         }
       }
@@ -489,10 +408,7 @@ function KeyDownFunc(e: KeyboardEvent) {
     let idx_y: number = (queue_mino[current_index].y - frame_y) / tile_size + 1;
     for (let i: number = 0; i < 5; i++) {
       for (let j: number = 0; j < 5; j++) {
-        if (
-          queue_mino[current_index].shape[i + 5 * j] === 1 &&
-          field[idx_x - 2 + i + (idx_y - 2 + j + 1) * 12] === 1
-        ) {
+        if (queue_mino[current_index].shape[i + 5 * j] === 1 && field[idx_x - 2 + i + (idx_y - 2 + j + 1) * 12] === 1) {
           downflag = false;
         }
       }
@@ -504,21 +420,9 @@ function KeyDownFunc(e: KeyboardEvent) {
       refreshDisplay();
     }
   } else if (e.key === "z") {
-    queue_mino[current_index].spinLeft(
-      field,
-      frame_x,
-      frame_y,
-      tile_size,
-      refreshDisplay
-    );
+    queue_mino[current_index].spinLeft(field, frame_x, frame_y, tile_size, refreshDisplay);
   } else if (e.key === "x") {
-    queue_mino[current_index].spinRight(
-      field,
-      frame_x,
-      frame_y,
-      tile_size,
-      refreshDisplay
-    );
+    queue_mino[current_index].spinRight(field, frame_x, frame_y, tile_size, refreshDisplay);
   } else if (e.key === "a") {
     setHold();
   }
