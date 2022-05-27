@@ -1,13 +1,14 @@
 # Tetris_ts
 
-[Play](https://iichanize.github.io/tetris_ts/statics/index.html)
+### **[Play](https://iichanize.github.io/tetris_ts/statics/index.html)**
 
 ## 環境
 
 |            | バージョン |
 | ---------- | ---------- |
 | Node.js    | 14.17.0    |
-| TypeScript | 4.3.5      |
+| TypeScript | 4.7.2      |
+| webpack    | 5.72.1     |
 
 ## 操作方法
 
